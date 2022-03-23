@@ -154,7 +154,7 @@ class LNXlink():
                     self.client.publish(
                         f"homeassistant/sensor/lnxlink/{discovery_template['unique_id']}/config",
                         payload=json.dumps(discovery_template),
-                        retain=False
+                        retain=True
                     )
                     discovery_template['name'] = f"{addon.name.lower().replace(' ', '_')}_upload"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_upload"
@@ -165,7 +165,7 @@ class LNXlink():
                 self.client.publish(
                     f"homeassistant/{sensor_type}/lnxlink/{discovery_template['unique_id']}/config",
                     payload=json.dumps(discovery_template),
-                    retain=False
+                    retain=True
                 )
             if 'shutdown' in self.config['control']:
                 discovery_template = {
@@ -191,7 +191,7 @@ class LNXlink():
                 self.client.publish(
                     f"homeassistant/switch/lnxlink/{discovery_template['unique_id']}/config",
                     payload=json.dumps(discovery_template),
-                    retain=False
+                    retain=True
                 )
 
 
