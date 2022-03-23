@@ -138,7 +138,7 @@ class LNXlink():
 
                 entities_prefix = f"{self.config['mqtt']['clientId']} "
                 discovery_template['name'] = f"{entities_prefix}{addon.name}"
-                discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}"
+                discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}".lower()
                 discovery_template['state_topic'] = topic
                 discovery_template['icon'] = addon.icon
                 if addon.unit:
@@ -150,7 +150,7 @@ class LNXlink():
                 if service == 'network':
                     discovery_template['json_attributes_topic'] = topic
                     discovery_template['name'] = f"{entities_prefix}{addon.name} Download"
-                    discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_download"
+                    discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_download".lower()
                     discovery_template['value_template'] = "{{ value_json.download }}"
                     discovery_template['icon'] = "mdi:download-network-outline"
                     self.client.publish(
@@ -159,7 +159,7 @@ class LNXlink():
                         retain=True
                     )
                     discovery_template['name'] = f"{entities_prefix}{addon.name} Upload"
-                    discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_upload"
+                    discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_upload".lower()
                     discovery_template['value_template'] = "{{ value_json.upload }}"
                     discovery_template['icon'] = "mdi:upload-network-outline"
 
@@ -184,7 +184,7 @@ class LNXlink():
                         "manufacturer": "LNXLink 0.3"
                     },
                     "name": "Shutdown",
-                    "unique_id": f"{self.config['mqtt']['clientId']}_shutdown",
+                    "unique_id": f"{self.config['mqtt']['clientId']}_shutdown".lower(),
                     "icon": "mdi:power",
                     "command_topic": f"{self.pref_topic}/commands/shutdown",
                     "state_topic": f"{self.pref_topic}/lwt",
