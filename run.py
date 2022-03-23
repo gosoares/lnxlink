@@ -137,7 +137,8 @@ class LNXlink():
                 topic = f"{self.pref_topic}/{self.config['mqtt']['statsPrefix']}/{subtopic}"
 
                 entities_prefix = f"{self.config['mqtt']['clientId']} "
-                discovery_template['name'] = f"{entities_prefix}{addon.name}"
+                discovery_template['name'] = f"{addon.name}"
+                discovery_template['object_id'] = f"{entities_prefix}{discovery_template['name']}"
                 discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}".lower()
                 discovery_template['state_topic'] = topic
                 discovery_template['icon'] = addon.icon
@@ -149,7 +150,8 @@ class LNXlink():
 
                 if service == 'network':
                     discovery_template['json_attributes_topic'] = topic
-                    discovery_template['name'] = f"{entities_prefix}{addon.name} Download"
+                    discovery_template['name'] = f"{addon.name} Download"
+                    discovery_template['object_id'] = f"{entities_prefix}{discovery_template['name']}"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_download".lower()
                     discovery_template['value_template'] = "{{ value_json.download }}"
                     discovery_template['icon'] = "mdi:download-network-outline"
@@ -158,7 +160,8 @@ class LNXlink():
                         payload=json.dumps(discovery_template),
                         retain=True
                     )
-                    discovery_template['name'] = f"{entities_prefix}{addon.name} Upload"
+                    discovery_template['name'] = f"{addon.name} Upload"
+                    discovery_template['object_id'] = f"{entities_prefix}{discovery_template['name']}"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_upload".lower()
                     discovery_template['value_template'] = "{{ value_json.upload }}"
                     discovery_template['icon'] = "mdi:upload-network-outline"
@@ -184,6 +187,7 @@ class LNXlink():
                         "manufacturer": "LNXLink 0.3"
                     },
                     "name": "Shutdown",
+                    "object_id":  f"{self.config['mqtt']['clientId']}_shutdown".lower(),
                     "unique_id": f"{self.config['mqtt']['clientId']}_shutdown".lower(),
                     "icon": "mdi:power",
                     "command_topic": f"{self.pref_topic}/commands/shutdown",
@@ -206,4 +210,3 @@ if __name__ == '__main__':
     while not killer.kill_now:
         time.sleep(1)
     lnxlink.disconnect()
-    
