@@ -152,6 +152,7 @@ class LNXlink():
                     discovery_template['name'] = f"{entities_prefix}{addon.name} Download"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_download"
                     discovery_template['value_template'] = "{{ value_json.download }}"
+                    discovery_template['icon'] = "mdi:download-network-outline"
                     self.client.publish(
                         f"homeassistant/sensor/lnxlink/{discovery_template['unique_id']}/config",
                         payload=json.dumps(discovery_template),
@@ -160,6 +161,7 @@ class LNXlink():
                     discovery_template['name'] = f"{entities_prefix}{addon.name} Upload"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_upload"
                     discovery_template['value_template'] = "{{ value_json.upload }}"
+                    discovery_template['icon'] = "mdi:upload-network-outline"
 
                 sensor_type = getattr(addon, 'sensor_type', 'sensor')
                 print(service, sensor_type)
