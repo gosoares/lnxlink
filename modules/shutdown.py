@@ -8,4 +8,4 @@ class Addon():
 
     def startControl(self, topic, data):
         print(topic, data)
-        subprocess.call(["shutdown", "-t", "10"])
+        subprocess.call(["shutdown", "now"])
