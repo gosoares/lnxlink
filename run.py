@@ -136,7 +136,8 @@ class LNXlink():
                 subtopic = addon.name.lower().replace(' ', '/')
                 topic = f"{self.pref_topic}/{self.config['mqtt']['statsPrefix']}/{subtopic}"
 
-                discovery_template['name'] = addon.name.lower().replace(' ', '_')
+                entities_prefix = f"{self.config['mqtt']['clientId']} "
+                discovery_template['name'] = f"{entities_prefix}{addon.name}"
                 discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}"
                 discovery_template['state_topic'] = topic
                 discovery_template['icon'] = addon.icon
@@ -148,7 +149,7 @@ class LNXlink():
 
                 if service == 'network':
                     discovery_template['json_attributes_topic'] = topic
-                    discovery_template['name'] = f"{addon.name.lower().replace(' ', '_')}_download"
+                    discovery_template['name'] = f"{entities_prefix}{addon.name} Download"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_download"
                     discovery_template['value_template'] = "{{ value_json.download }}"
                     self.client.publish(
@@ -156,7 +157,7 @@ class LNXlink():
                         payload=json.dumps(discovery_template),
                         retain=True
                     )
-                    discovery_template['name'] = f"{addon.name.lower().replace(' ', '_')}_upload"
+                    discovery_template['name'] = f"{entities_prefix}{addon.name} Upload"
                     discovery_template['unique_id'] = f"{self.config['mqtt']['clientId']}_{service}_upload"
                     discovery_template['value_template'] = "{{ value_json.upload }}"
 
@@ -195,7 +196,6 @@ class LNXlink():
                 )
 
 
-
 if __name__ == '__main__':
     lnxlink = LNXlink('config.yaml')
     lnxlink.monitor_run_thread()
@@ -204,3 +204,4 @@ if __name__ == '__main__':
     while not killer.kill_now:
         time.sleep(1)
     lnxlink.disconnect()
+    
